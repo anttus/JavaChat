@@ -2,14 +2,14 @@ package javachat;
 
 import java.awt.event.KeyEvent;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class Login extends javax.swing.JFrame {
 
     public Login() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
         } 
         setSize(300, 380);
         setLocationRelativeTo(null);
@@ -137,7 +137,7 @@ public class Login extends javax.swing.JFrame {
 //Login method
     private void login(String name, String address, int port) {
         dispose();
-        new ClientGUI(name, address, port);
+        ClientGUI clientGUI = new ClientGUI(name, address, port);
     }
     
     public static void main(String args[]) {
@@ -148,14 +148,11 @@ public class Login extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
         } 
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Login().setVisible(true);
         });
     }
 

@@ -15,7 +15,8 @@ public class Client {
     
     private String name, address;
     private int port;
-
+    private int ID = -1;
+    
     public Client(String name, String address, int port) {
         this.name = name;
         this.address = address;
@@ -32,6 +33,14 @@ public class Client {
 
     public int getPort() {
         return port;
+    }
+    
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getID() {
+        return ID;
     }
     
 //Opening the connection
@@ -74,4 +83,15 @@ public class Client {
         send.start();
     }
     
+    public void close() {
+        new Thread("Close") {
+            public void run() {
+                synchronized  (socket) {
+                    socket.close();
+                }
+            }
+        }.start();
+    }
+
 }
+
